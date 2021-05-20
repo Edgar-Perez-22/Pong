@@ -6,8 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import javax.swing.JFrame;
 
+import javax.swing.JFrame;
 
 
 public class Pong extends JFrame implements KeyListener {
@@ -74,7 +74,7 @@ public class Pong extends JFrame implements KeyListener {
     }
 
     private void chequearColision(){
-        if ( (pelota.x <= 75 && pelota.x >= 60) && pelota.y > godzilla.y && pelota.y < godzilla.y + godzilla.alto)
+        if ( (pelota.x <= 710 && pelota.x >= 695) && pelota.y > godzilla.y && pelota.y < godzilla.y + godzilla.alto)
         {
             if (pelota.veloX < 0)
                 Buenas++;
@@ -82,7 +82,7 @@ public class Pong extends JFrame implements KeyListener {
             pelota.veloX = -pelota.veloX;
         }
 
-        if ( (pelota.x >= 695 && pelota.x <= 710) && pelota.y > kong.y && pelota.y < kong.y + kong.alto)
+        if ( (pelota.x >= 60 && pelota.x <= 75) && pelota.y > kong.y && pelota.y < kong.y + kong.alto)
         {
             if (pelota.veloX > 0)
                 Buenas++;
@@ -103,9 +103,9 @@ public class Pong extends JFrame implements KeyListener {
             g.fillRect(0, 0, windowWidth, windowHeight);
 
             muestroPuntos(g);
-            dibujoPelota(g);
-            dibujoPaletas1(g);
-            dibujoPaletas2(g);
+            DibujoPelota(g);
+            DibujoKong(g);
+            DibujoGodzilla(g);
 
         } finally {
             g.dispose();
@@ -115,19 +115,19 @@ public class Pong extends JFrame implements KeyListener {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void dibujoPelota(Graphics g) {
+    private void DibujoPelota(Graphics g) {
         g.setColor(Color.CYAN);
         g.fillOval(pelota.x, pelota.y, 20, 20);
     }
 
-    private void dibujoPaletas1(Graphics g) {
+    private void DibujoKong(Graphics g) {
 
         switch (key){
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
                 if (kong.y>23)
                     kong.y=kong.y-6;
                 break;
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
                 if (kong.y<windowHeight-78)
                     kong.y=kong.y+6;
                 break;
@@ -136,25 +136,25 @@ public class Pong extends JFrame implements KeyListener {
 
         }
 
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(710, kong.y, 15, kong.alto);
+        g.setColor(Color.BLUE);
+        g.fillRect(75, kong.y, 15, kong.alto);
     }
 
-    private void dibujoPaletas2(Graphics g) {
+    private void DibujoGodzilla(Graphics g) {
 
         switch (key){
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
                 if (godzilla.y>23)
                     godzilla.y=godzilla.y-6;
                 break;
-            case KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN:
                 if (godzilla.y<windowHeight-78)
                     godzilla.y=godzilla.y+6;
                 break;
         }
 
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(75, godzilla.y, 15, godzilla.alto);
+        g.setColor(Color.RED);
+        g.fillRect(710, godzilla.y, 15, godzilla.alto);
     }
 
     private void muestroPuntos(Graphics g){
