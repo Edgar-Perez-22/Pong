@@ -22,8 +22,10 @@ public class Pong extends JFrame implements KeyListener {
     private long goal;
     private long tiempoDemora=8;
 
-    private int Buenas;
-    private int Malas;
+    private int MalasG;
+    private int BuenasG;
+    private int MalasK;
+    private int BuenasK;
 
 
     public static void main(String[] args) {
@@ -62,9 +64,14 @@ public class Pong extends JFrame implements KeyListener {
 
         chequearColision();
 
-        if(pelota.x <= 0 || pelota.x >= windowWidth-40){
+        if(pelota.x <= 0){
             pelota.veloX = -pelota.veloX;
-            Malas++;
+            MalasK++;
+        }
+
+        if(pelota.x >= windowWidth-40){
+            pelota.veloX = -pelota.veloX;
+            MalasG++;
         }
 
         if(pelota.y <= 20 || pelota.y >= (windowHeight - 40))
@@ -74,18 +81,18 @@ public class Pong extends JFrame implements KeyListener {
     }
 
     private void chequearColision(){
-        if ( (pelota.x <= 710 && pelota.x >= 695) && pelota.y > godzilla.y && pelota.y < godzilla.y + godzilla.alto)
+        if ( (pelota.x <= 75 && pelota.x >= 60) && pelota.y > kong.y && pelota.y < kong.y + kong.alto)
         {
             if (pelota.veloX < 0)
-                Buenas++;
+                BuenasK++;
 
             pelota.veloX = -pelota.veloX;
         }
 
-        if ( (pelota.x >= 60 && pelota.x <= 75) && pelota.y > kong.y && pelota.y < kong.y + kong.alto)
+        if ( (pelota.x >= 695 && pelota.x <= 710) && pelota.y > godzilla.y && pelota.y < godzilla.y + godzilla.alto)
         {
             if (pelota.veloX > 0)
-                Buenas++;
+                BuenasG++;
 
             pelota.veloX = -pelota.veloX;
         }
@@ -131,8 +138,6 @@ public class Pong extends JFrame implements KeyListener {
                 if (kong.y<windowHeight-78)
                     kong.y=kong.y+6;
                 break;
-            case KeyEvent.VK_X:
-                System.exit(0);
 
         }
 
@@ -160,11 +165,19 @@ public class Pong extends JFrame implements KeyListener {
     private void muestroPuntos(Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Buenas: " + Buenas, 20, 50);
+        g.drawString("Paradas: " + BuenasG, 700, 50);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Malas: " + Malas, 20, 70);
+        g.drawString("Falladas: " + MalasG, 700, 70);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Paradas: " + BuenasK, 20, 50);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Falladas: " + MalasK, 20, 70);
     }
 
     private void sleep(){
