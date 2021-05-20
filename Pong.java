@@ -15,7 +15,8 @@ public class Pong extends JFrame implements KeyListener {
     private int windowWidth = 800;
     private int windowHeight = 600;
     private Pelota pelota;
-    private Paleta paleta;
+    private Kong kong;
+    private Godzilla godzilla;
 
     private int key=0;
     private long goal;
@@ -50,7 +51,8 @@ public class Pong extends JFrame implements KeyListener {
     private void inicializoObjetos() {
 
         pelota = new Pelota(windowWidth/2, windowHeight/2, 5, -5);
-        paleta = new Paleta(windowHeight/2, 80);
+        kong = new Kong(windowHeight/2, 80);
+        godzilla = new Godzilla(windowHeight/2, 80);
     }
 
     private void pelota() {
@@ -72,7 +74,7 @@ public class Pong extends JFrame implements KeyListener {
     }
 
     private void chequearColision(){
-        if ( (pelota.x <= 75 && pelota.x >= 60) && pelota.y > paleta.y && pelota.y < paleta.y + paleta.alto)
+        if ( (pelota.x <= 75 && pelota.x >= 60) && pelota.y > godzilla.y && pelota.y < godzilla.y + godzilla.alto)
         {
             if (pelota.veloX < 0)
                 Buenas++;
@@ -80,7 +82,7 @@ public class Pong extends JFrame implements KeyListener {
             pelota.veloX = -pelota.veloX;
         }
 
-        if ( (pelota.x >= 695 && pelota.x <= 710) && pelota.y > paleta.y && pelota.y < paleta.y + paleta.alto)
+        if ( (pelota.x >= 695 && pelota.x <= 710) && pelota.y > kong.y && pelota.y < kong.y + kong.alto)
         {
             if (pelota.veloX > 0)
                 Buenas++;
@@ -102,7 +104,8 @@ public class Pong extends JFrame implements KeyListener {
 
             muestroPuntos(g);
             dibujoPelota(g);
-            dibujoPaletas(g);
+            dibujoPaletas1(g);
+            dibujoPaletas2(g);
 
         } finally {
             g.dispose();
@@ -117,25 +120,41 @@ public class Pong extends JFrame implements KeyListener {
         g.fillOval(pelota.x, pelota.y, 20, 20);
     }
 
-    private void dibujoPaletas(Graphics g) {
+    private void dibujoPaletas1(Graphics g) {
 
         switch (key){
             case KeyEvent.VK_UP:
-                if (paleta.y>23)
-                    paleta.y=paleta.y-6;
+                if (kong.y>23)
+                    kong.y=kong.y-6;
                 break;
             case KeyEvent.VK_DOWN:
-                if (paleta.y<windowHeight-78)
-                    paleta.y=paleta.y+6;
+                if (kong.y<windowHeight-78)
+                    kong.y=kong.y+6;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_X:
                 System.exit(0);
 
         }
 
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(75, paleta.y, 15, paleta.alto);
-        g.fillRect(710, paleta.y, 15, paleta.alto);
+        g.fillRect(710, kong.y, 15, kong.alto);
+    }
+
+    private void dibujoPaletas2(Graphics g) {
+
+        switch (key){
+            case KeyEvent.VK_W:
+                if (godzilla.y>23)
+                    godzilla.y=godzilla.y-6;
+                break;
+            case KeyEvent.VK_S:
+                if (godzilla.y<windowHeight-78)
+                    godzilla.y=godzilla.y+6;
+                break;
+        }
+
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(75, godzilla.y, 15, godzilla.alto);
     }
 
     private void muestroPuntos(Graphics g){
@@ -157,7 +176,7 @@ public class Pong extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e){
-        key=e.getKeyCode();
+        key = e.getKeyCode();
     }
 
     @Override
