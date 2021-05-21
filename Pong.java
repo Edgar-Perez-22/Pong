@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 
 
@@ -18,9 +19,9 @@ public class Pong extends JFrame implements KeyListener {
     private Kong kong;
     private Godzilla godzilla;
 
-    private int key=0;
+    private int key = 0;
     private long goal;
-    private long tiempoDemora=8;
+    private long tiempoDemora = 8;
 
     private int MalasG;
     private int BuenasG;
@@ -47,6 +48,7 @@ public class Pong extends JFrame implements KeyListener {
         while(true) {
             pelota();
             sleep();
+            fin();
         }
 
     }
@@ -178,6 +180,17 @@ public class Pong extends JFrame implements KeyListener {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 16));
         g.drawString("Falladas: " + MalasK, 20, 70);
+    }
+
+    private void fin(){
+        if (MalasK >=15){
+            JOptionPane.showMessageDialog(null, "Ha ganado Godzilla");
+            System.exit(0);
+        }
+        if (MalasG >=15){
+            JOptionPane.showMessageDialog(null, "Ha ganado King Kong");
+            System.exit(0);
+        }
     }
 
     private void sleep(){
